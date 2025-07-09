@@ -8,21 +8,27 @@
 <body>
 
     <?php
+        //vista por defecto
         if (!isset($_GET['vista']) || $_GET['vista'] == "") {
             $_GET['vista'] = "login";
         }
 
-        // Incluir navbar solo si no es login
-        if ($_GET['vista'] != "login") {
+        // Ruta del archivo a cargar
+        $vista = basename($_GET['vista']); // seguridad básica
+        $rutaVista = "./views/" . $vista . ".php";
+
+        /// Incluir navbar solo si no es login ni 404
+        if ($_GET['vista'] != "login" && $_GET['vista'] != "404") {
             include "./inc/navbar.php"; // ruta elemento
         }
 
         // Mostrar contenido
-        if (is_file("./views/" . $_GET['vista'] . ".php") && $_GET['vista'] != "404") {
-            include "./views/" . $_GET['vista'] . ".php"; // ruta elemento
+        if (is_file($rutaVista) && $vista != "404") {
+            include $rutaVista;
         } else {
             include "./views/404.php";
         }
+
     ?>
 
     <!-- Bootstrap Bundle JS -->
