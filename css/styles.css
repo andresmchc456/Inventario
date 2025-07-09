@@ -1,3 +1,15 @@
 .form-inline{
     display: inline-flex;
 }
+.main-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    height: 100vh;           /* Ocupa toda la altura de la ventana */
+}
+
+.main-container > .hero-body {
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
+}
