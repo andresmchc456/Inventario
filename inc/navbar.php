@@ -1,7 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
   <div class="container-fluid">
     <!-- Título o logo -->
-    <a class="navbar-brand" href="#">Inventario</a>
+     <a class="navbar-brand" href="index.php?vista=home"> <!-- href=esta la rura de la página de inicio -->
+      <i class="bi bi-house-fill me-2"></i>Inventario
+    </a>
 
     <!-- Botón hamburguesa -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,3 +61,5 @@
     </div>
   </div>
 </nav>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
