@@ -2,6 +2,7 @@
 conexion base de datos  con extencio pdo-->
 <!-- instacia la clase PDO -->
  <!-- http://localhost/Inventario/php/main.php -->
+
 <?php
 function conexion(){
     try {
@@ -14,7 +15,20 @@ function conexion(){
         exit(); // detener el script si falla la conexión
     }
 }
+// 👇 Ejecutar la función
+$pdo = conexion();
 
 // peticion o insercion en la base de datos en la tabla categoria
-// $pdo->query("INSERT INTO categoria(categoria_nombre, categoria_ubicacion) VALUES('prueba', 'texto ubicacion')");
+ $pdo->query("INSERT INTO categoria(categoria_nombre, categoria_ubicacion) VALUES('prueba', 'texto ubicacion')");
+
+
+#verificar datos de formulario
+ function verificar_datos($filtro, $cadena){
+     if(preg_match("/^".$filtro."$/", $cadena)){
+         return false;
+     }else{
+         return true;
+     }
+ }
+
 ?>
