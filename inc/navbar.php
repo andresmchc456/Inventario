@@ -19,9 +19,9 @@
             Usuario
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Opción 1</a></li>
-            <li><a class="dropdown-item" href="#">Opción 2</a></li>
-            <li><a class="dropdown-item disabled" href="#">Opción deshabilitada</a></li>
+            <li><a class="dropdown-item" href="index.php?vista=user_new">Nuevo</a></li> <!-- hace la el enlace con la vista de nuevo usuario en la carpeta views -->
+            <li><a class="dropdown-item" href="index.php?vista=user_list">Lista</a></li>
+            <li><a class="dropdown-item" href="index.php?vista=user_search">Buscar</a></li>
           </ul>
         </li>
 
