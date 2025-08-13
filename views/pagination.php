@@ -1,4 +1,4 @@
-<nav aria-label="Page navigation">
+<nav aria-label="Page navigation" class="mt-5 mb-5">
   <ul class="pagination justify-content-center">
     <li class="page-item"><a class="page-link" href="lista.php?pagina=1">Anterior</a></li>
     <li class="page-item"><a class="page-link" href="lista.php?pagina=1">1</a></li>
