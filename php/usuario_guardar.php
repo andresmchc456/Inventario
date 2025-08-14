@@ -5,7 +5,7 @@
     $nombre     = limpiar_cadena($_POST['InputName'] ?? '');
     $apellidos  = limpiar_cadena($_POST['lastName'] ?? '');
     $usuario    = limpiar_cadena($_POST['user'] ?? '');
-    $correo     = limpiar_cadena($_POST['InputEmail1'] ?? '');
+    $email     = limpiar_cadena($_POST['InputEmail1'] ?? '');
     $password   = limpiar_cadena($_POST['exampleInputPassword1'] ?? '');
     $repitePass = limpiar_cadena($_POST['InputPassword2'] ?? '');
 
@@ -14,7 +14,7 @@
         empty($nombre) ||
         empty($apellidos) ||
         empty($usuario) ||
-        empty($correo) ||
+        empty($email) ||
         empty($password) ||
         empty($repitePass)
     ) {
@@ -54,13 +54,36 @@
         exit();
     }
 
-    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        echo '
-        <div class="alert alert-danger" role="alert">
-            <strong>¡Error!</strong><br>
-            El correo electrónico no es válido.
-        </div>';
-        exit();
+    // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //     echo '
+    //     <div class="alert alert-danger" role="alert">
+    //         <strong>¡Error!</strong><br>
+    //         El email electrónico no es válido.
+    //     </div>';
+    //     exit();
+    // }
+
+    if($email!=""){
+        if(filter_var($email,FILTER_VALIDATE_EMAIL)){
+            $check_email = conexion();
+            $check_email = $check_email -> query("SELECT usuario_email FROM usuario WHERE usuario_email='$email'");// Verificar si el email ya existe
+            if($check_email -> rowCount()>0){
+                echo '
+                <div class="alert alert-danger" role="alert">
+                    <strong>¡Error!</strong><br>
+                    El email ya está registrado.
+                </div>';
+                exit();
+            }
+            $check_email = null; // Cerrar conexión
+        }else{
+            echo '
+            <div class="alert alert-danger" role="alert">
+                <strong>¡Error!</strong><br>
+                El email electrónico no es válido.
+            </div>';
+            exit();
+        }
     }
 
     # Validar contraseñas
@@ -82,9 +105,13 @@
         exit();
     }
 
+    
+
     # Si todo está bien, insertar en BD (ejemplo)
     echo '
     <div class="alert alert-success" role="alert">
         Usuario registrado correctamente.
     </div>';
+
+    
 ?>
