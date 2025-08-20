@@ -1,25 +1,24 @@
-<?php require "./inc/sessionStart.php" ; ?> 
+<?php require "./inc/sessionStart.php"; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php include "./inc/head.php";?> <!-- ruta elemento -->
+    <?php include "./inc/head.php"; ?>
 </head>
 <body>
 
     <?php
-        //vista por defecto
+        // Vista por defecto
         if (!isset($_GET['vista']) || $_GET['vista'] == "") {
             $_GET['vista'] = "login";
         }
 
-        // Ruta del archivo a cargar
-        $vista = basename($_GET['vista']); // seguridad básica
+        $vista = basename($_GET['vista']); 
         $rutaVista = "./views/" . $vista . ".php";
 
-        /// Incluir navbar solo si no es login ni 404
+        // Incluir navbar solo si no es login ni 404
         if ($_GET['vista'] != "login" && $_GET['vista'] != "404") {
-            include "./inc/navbar.php"; // ruta elemento
+            include "./inc/navbar.php"; 
         }
 
         // Mostrar contenido
@@ -28,15 +27,19 @@
         } else {
             include "./views/404.php";
         }
-
     ?>
   
-    <?php include "./views/pagination.php";?> <!-- paginador -->
-    <!-- Bootstrap Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Paginador solo en las vistas que lo necesiten -->
+    <?php 
+    if ($_GET['vista'] == "user_list" || $_GET['vista'] == "productos") {
+        include "./views/pagination.php"; 
+    }
+    ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 
 <!-- lo utilizamos para navehgar entre las diferentes vistas de la aplicación.
