@@ -54,37 +54,45 @@
         exit();
     }
 
-    // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    //     echo '
-    //     <div class="alert alert-danger" role="alert">
-    //         <strong>¡Error!</strong><br>
-    //         El email electrónico no es válido.
-    //     </div>';
-    //     exit();
-    // }
-
-    if($email!=""){
-        if(filter_var($email,FILTER_VALIDATE_EMAIL)){
-            $check_email = conexion();
-            $check_email = $check_email -> query("SELECT usuario_email FROM usuario WHERE usuario_email='$email'");// Verificar si el email ya existe
-            if($check_email -> rowCount()>0){
-                echo '
-                <div class="alert alert-danger" role="alert">
-                    <strong>¡Error!</strong><br>
-                    El email ya está registrado.
-                </div>';
-                exit();
-            }
-            $check_email = null; // Cerrar conexión
-        }else{
-            echo '
-            <div class="alert alert-danger" role="alert">
-                <strong>¡Error!</strong><br>
-                El email electrónico no es válido.
-            </div>';
-            exit();
-        }
+    # Validar email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo '
+        <div class="alert alert-danger" role="alert">
+            <strong>¡Error!</strong><br>
+            El email electrónico no es válido.
+        </div>';
+        exit();
     }
+
+    # Verificar si el email ya existe
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario WHERE usuario_email = :email");
+    $stmt->execute([':email' => $email]);
+    $existe_email = $stmt->fetchColumn();
+
+    if ($existe_email > 0) {
+        echo '<div class="alert alert-danger" role="alert">
+                <strong>¡Error!</strong><br>
+                El email ya está registrado.
+            </div>';
+        exit();
+    }
+
+
+
+    # Verificar si el usuario ya existe
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuario WHERE usuario_usuario = :usuario");
+    $stmt->execute([':usuario' => $usuario]);
+    $existe_usuario = $stmt->fetchColumn();
+
+    if ($existe_usuario > 0) {
+        echo '<div class="alert alert-danger" role="alert">
+                <strong>¡Error!</strong><br>
+                El USUARIO ya está registrado.
+            </div>';
+        exit();
+    }
+
+
 
     # Validar contraseñas
     if ($password !== $repitePass) {
@@ -105,13 +113,31 @@
         exit();
     }
 
+    # Hashear contraseña antes de guardar
+    $clave_hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 10]);
     
+    try {
+        $stmt = $pdo->prepare("INSERT INTO usuario (usuario_nombre, usuario_apellido, usuario_usuario, usuario_email, usuario_clave) 
+                            VALUES (:nombre, :apellidos, :usuario, :email, :clave)");
+        $stmt->execute([
+            ':nombre'    => $nombre,
+            ':apellidos' => $apellidos,
+            ':usuario'   => $usuario,
+            ':email'     => $email,
+            ':clave'     => $clave_hash
+        ]);
 
-    # Si todo está bien, insertar en BD (ejemplo)
-    echo '
-    <div class="alert alert-success" role="alert">
-        Usuario registrado correctamente.
-    </div>';
+        echo '<div class="alert alert-success" role="alert">
+                <strong>¡Éxito!</strong><br>
+                Usuario registrado correctamente.
+            </div>';
+
+    } catch (PDOException $e) {
+        echo '<div class="alert alert-danger" role="alert">
+                <strong>¡Error en BD!</strong><br>' . $e->getMessage() . '
+            </div>';
+    }
+
+    $pdo = null;
 
     
-?>
