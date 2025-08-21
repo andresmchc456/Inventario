@@ -3,15 +3,26 @@
         <div class="card-body">
             <h2 class="card-title text-center mb-4">Sistema de Inventario</h2>
 
-            <form class="row g-3">
+            <!-- MENSAJES DE ERROR ARRIBA DEL FORM -->
+            <div class="mb-3">
+                <?php
+                    if(isset($_POST['login_usuario']) && isset($_POST['login_clave'])){ 
+                        require_once "./php/main.php"; 
+                        require_once "./php/iniciar_sesion.php"; 
+                    }
+                ?>
+            </div>
+
+            <!-- FORMULARIO -->
+            <form class="box login row g-3" action="" method="POST" autocomplete="off">
                 <div class="col-12">
-                    <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4">
+                    <label for="inputEmail4" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="inputEmail4" name="login_usuario" required>
                 </div>
 
                 <div class="col-12">
                     <label for="inputPassword4" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4">
+                    <input type="password" class="form-control" id="inputPassword4" name="login_clave" required>
                 </div>
 
                 <div class="col-12">
@@ -30,3 +41,11 @@
         </div>
     </div>
 </div>
+
+
+<?php
+    if(isset($_POST['login_usuario']) && isset($_POST['login_clave'])){ // Verificar si se envió el formulario
+        require_once "./php/main.php"; // archivo con limpiar_cadena y verificar_datos
+        require_once "./php/iniciar_sesion.php";// archivo con la función iniciar_sesion
+    }
+?>

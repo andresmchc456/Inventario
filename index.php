@@ -10,7 +10,7 @@
     <?php
         // Vista por defecto
         if (!isset($_GET['vista']) || $_GET['vista'] == "") {
-            $_GET['vista'] = "login";
+            $_GET['vista'] = "home";
         }
 
         $vista = basename($_GET['vista']); 
@@ -46,6 +46,7 @@
 se ultilza en el navegador url  se llama Parámetro de consulta o Query String-->
 <!-- http://localhost:8000/?vista= -->
 <!-- http://localhost:8000/?vista=login -->
+ <!-- http://localhost:8000/?vista=home -->
  <!-- http://localhost:8000/?vista=index -->
 
 <!-- comado para correr el servidor local
