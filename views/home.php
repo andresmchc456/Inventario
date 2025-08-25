@@ -9,4 +9,9 @@
     <!-- <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
   </ul> -->
 <!-- </nav> // aca se cerro el la funcion paginador-->
-<h1>hola soy home</h1>
+<div>
+    <h1>Home</h1>
+    <h2>Bienvenido  <?php echo $_SESSION['nombre']. " ". 
+    $_SESSION['apellido'];
+    ?></h2>
+</div>

@@ -16,8 +16,17 @@
         $vista = basename($_GET['vista']); 
         $rutaVista = "./views/" . $vista . ".php";
 
+        # Cerrar sesión si no hay usuario logueado y la vista no es login ni 404
+        if ($vista != "login" && $vista != "404") {
+            if (empty($_SESSION['id']) || empty($_SESSION['usuario'])) {
+                include "./vistas/logout.php";
+                exit();
+            }
+        }
+
+
         // Incluir navbar solo si no es login ni 404
-        if ($_GET['vista'] != "login" && $_GET['vista'] != "404") {
+        if ($vista != "login" && $vista != "404") {
             include "./inc/navbar.php"; 
         }
 
@@ -31,7 +40,7 @@
   
     <!-- Paginador solo en las vistas que lo necesiten -->
     <?php 
-    if ($_GET['vista'] == "user_list" || $_GET['vista'] == "productos") {
+    if ($vista == "user_list" || $vista == "productos") {
         include "./views/pagination.php"; 
     }
     ?>
@@ -39,6 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 
 
