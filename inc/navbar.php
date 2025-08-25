@@ -55,7 +55,7 @@
           <a class="nav-link" href="#">Mi cuenta</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Salir</a>
+          <a href="index.php?vista=logout" class="nav-link" href="#">Salir</a> <!-- hace la el enlace con la vista de logout en la carpeta views -->
         </li>
       </ul>
     </div>
