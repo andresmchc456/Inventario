@@ -10,7 +10,7 @@
     <?php
         // Vista por defecto
         if (!isset($_GET['vista']) || $_GET['vista'] == "") {
-            $_GET['vista'] = "home";
+            $_GET['vista'] = "login";
         }
 
         $vista = basename($_GET['vista']); 
