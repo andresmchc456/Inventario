@@ -13,3 +13,25 @@
     max-width: 400px;
     min-width: 300px;
 }
+
+/* botones lista de usurios*/
+.btn-custom-blue {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}
+.btn-custom-blue:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-custom-red {
+  background-color: #dc3545; /* rojo Bootstrap */
+  border-color: #dc3545;
+  color: #fff;
+}
+.btn-custom-red:hover {
+  background-color: #bb2d3b; /* rojo más oscuro */
+  border-color: #b02a37;
+}
+

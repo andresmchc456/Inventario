@@ -40,9 +40,9 @@
   
     <!-- Paginador solo en las vistas que lo necesiten -->
     <?php 
-    if ($vista == "user_list" || $vista == "productos") {
-        include "./views/pagination.php"; 
-    }
+    // if ($vista == "user_list" || $vista == "productos") {
+    //     include "./views/pagination.php"; 
+    // }
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
