@@ -3,7 +3,7 @@ require_once "./php/main.php";
 
 class UsuarioLista {
 
-    public static function listarUsuarios($pagina, $registros, $url, $busqueda) {// $busqueda no se usa actualmente
+    public static function listarUsuarios($pagina, $registros, $url, $busqueda) {
         $pagina = (int)$pagina;
         $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
 
@@ -14,11 +14,8 @@ class UsuarioLista {
         $consulta_datos = "SELECT * FROM usuario ORDER BY usuario_id ASC LIMIT $inicio, $registros";
         $consulta_total = "SELECT COUNT(usuario_id) FROM usuario";
 
-        $datos = $conexion->query($consulta_datos);
-        $datos = $datos->fetchAll();
-
-        $total = $conexion->query($consulta_total);
-        $total = (int) $total->fetchColumn();
+        $datos = $conexion->query($consulta_datos)->fetchAll();
+        $total = (int) $conexion->query($consulta_total)->fetchColumn();
 
         $Npaginas = ceil($total / $registros);
 
@@ -27,7 +24,7 @@ class UsuarioLista {
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered">
                 <thead class="table-dark">
-                    <tr class="text-center" >
+                    <tr class="text-center">
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Usuario</th>
@@ -43,46 +40,47 @@ class UsuarioLista {
             foreach ($datos as $rows) {
                 $tabla .= '
                 <tr>
-					<td>' . $contador . '</td>
-					<td>' . $rows['usuario_nombre'] . '</td>
-					<td>' . $rows['usuario_usuario'] . '</td>
-					<td>' . $rows['usuario_email'] . '</td>
-					<td>
-						<div class="d-flex justify-content-center gap-5">
-							<a href="index.php?vista=user_update&user_id_up=' . $rows['usuario_id'] . '" 
-							class=" btn btn-sm btn-custom-blue">
-								<i class="bi bi-pencil-square"></i> Actualizar
-							</a>
-						
-							<a href="' . $url . $pagina . '&user_id_del=' . $rows['usuario_id'] . '" 
-							 class="btn btn-sm btn-custom-red">
-								<i class="bi bi-trash"></i> Eliminar
-							</a>
-						</div>
-					</td>	
-				</tr>
-                ';
+                    <td>'.$contador.'</td>
+                    <td>'.$rows['usuario_nombre'].'</td>
+                    <td>'.$rows['usuario_usuario'].'</td>
+                    <td>'.$rows['usuario_email'].'</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-5">
+                            <a href="index.php?vista=user_update&user_id_up='.$rows['usuario_id'].'" 
+                               class="btn btn-sm btn-custom-blue">
+                                <i class="bi bi-pencil-square"></i> Actualizar
+                            </a>
+                            <a href="'.$url.$pagina.'&user_id_del='.$rows['usuario_id'].'" 
+                               class="btn btn-sm btn-custom-red">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>';
                 $contador++;
             }
         } else {
             $tabla .= '
             <tr>
                 <td colspan="5" class="text-center">No hay registros en el sistema</td>
-            </tr>
-            ';
+            </tr>';
         }
 
         $tabla .= '
                 </tbody>
             </table>
-        </div>
-        ';
+        </div>';
 
-        echo $tabla;
         $conexion = null;
+        echo $tabla;
+
+        // 🔹 Llamar paginador
+        require_once "./views/pagination.php";
+        if ($total >= 1 && $pagina <= $Npaginas) {
+            echo paginador_bootstrap($pagina, $Npaginas, $url, "Siguiente", "Anterior");
+        }
     }
 }
 
 // Ejecutar listado
 UsuarioLista::listarUsuarios($pagina, $registros, $url, $busqueda);
-?>

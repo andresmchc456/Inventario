@@ -29,7 +29,5 @@
         #  usuario  tabla#
         require_once "./php/usuario_lista.php";
 
-        //paginador
-        require_once "./views/pagination.php"; 
     ?>
 </div>
