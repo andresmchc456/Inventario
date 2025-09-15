@@ -59,17 +59,29 @@ class UsuarioLista {
                 </tr>';
                 $contador++;
             }
+
+            // Calcular rango mostrado
+            $pag_inicio = $inicio + 1;
+            $pag_final = $inicio + count($datos);
+
+            $tabla .= '
+                </tbody>
+            </table>
+        </div>
+        <p class="text-end mt-2">
+            Mostrando usuarios <strong>'.$pag_inicio.'</strong> al 
+            <strong>'.$pag_final.'</strong> de un 
+            <strong>total de '.$total.'</strong>
+        </p>';
         } else {
             $tabla .= '
             <tr>
                 <td colspan="5" class="text-center">No hay registros en el sistema</td>
-            </tr>';
-        }
-
-        $tabla .= '
+            </tr>
                 </tbody>
             </table>
         </div>';
+        }
 
         $conexion = null;
         echo $tabla;
@@ -77,7 +89,7 @@ class UsuarioLista {
         // 🔹 Llamar paginador
         require_once "./views/pagination.php";
         if ($total >= 1 && $pagina <= $Npaginas) {
-            echo paginador_bootstrap($pagina, $Npaginas, $url, "Siguiente", "Anterior");
+            echo paginador_bootstrap($pagina, $Npaginas, $url, "Anterior", "Siguiente");
         }
     }
 }

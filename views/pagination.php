@@ -1,3 +1,4 @@
+<!-- paginador dinamico -->
 <?php
 if(!function_exists("paginador_bootstrap")){
     function paginador_bootstrap($pagina, $Npaginas, $url, $labelAnterior="Previous", $labelSiguiente="Next"){
