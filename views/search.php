@@ -7,16 +7,17 @@
 <?php
     require_once "./php/main.php";
 
-    if(isset($_POST['modulo_buscador'])){
+    if(isset($_POST['modulo_buscador'])){// Verificar que se ha enviado el formulario de búsqueda
         require_once "./php/buscador.php";
     }
 
-    if(!isset($_SESSION['busqueda_producto']) && empty($_SESSION['busqueda_producto'])){
+    if(!isset($_SESSION['busqueda_usuario']) && empty($_SESSION['busqueda_usuario'])){
+    // if(!isset($_SESSION['busqueda_producto']) && empty($_SESSION['busqueda_producto'])){    
 ?>
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <form action="" method="POST" autocomplete="off">
-                <input type="hidden" name="modulo_buscador" value="producto">
+                <input type="hidden" name="modulo_buscador" value="usuario">
 
                 <div class="input-group">
                     <input 
@@ -44,7 +45,7 @@
                 <input type="hidden" name="eliminar_buscador" value="producto">
 
                 <p class="mb-3">
-                    Estás buscando <strong>“<?php echo $_SESSION['busqueda_producto']; ?>”</strong>
+                    Estás buscando <strong>“<?php echo $_SESSION['busqueda_usuario']; ?>”</strong>
                 </p>
 
                 <button type="submit" class="btn btn-danger">
@@ -69,10 +70,10 @@
             }
         }
 
-        $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;
+        $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;// Obtener categoría seleccionada
 
         $pagina=limpiar_cadena($pagina);
-        $url="index.php?vista=product_search&page=";
+        $url="index.php?vista=product_search&page=";// URL base para paginación
         $registros=15;
         $busqueda=$_SESSION['busqueda_producto'];
 
