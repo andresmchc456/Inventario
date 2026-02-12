@@ -1,18 +1,19 @@
 <div class="container-fluid mb-4">
-    <h1 class="h3">Productos</h1>
-    <h2 class="h6 text-muted">Buscar producto</h2>
+    <h1 class="h3">Usuarios</h1>
+    <h2 class="h6 text-muted">Buscar usuario</h2>
 </div>
 
 <div class="container py-4">
 <?php
-    require_once "./php/main.php";
+    require_once __DIR__ . "/../php/main.php";
 
-    if(isset($_POST['modulo_buscador'])){// Verificar que se ha enviado el formulario de búsqueda
-        require_once "./php/buscador.php";
+    // Procesar búsqueda
+    if (isset($_POST['modulo_buscador'])) {
+        require_once __DIR__ . "/buscador.php";
     }
 
-    if(!isset($_SESSION['busqueda_usuario']) && empty($_SESSION['busqueda_usuario'])){
-    // if(!isset($_SESSION['busqueda_producto']) && empty($_SESSION['busqueda_producto'])){    
+    // SI NO hay búsqueda activa
+    if (!isset($_SESSION['busqueda_usuario']) || empty($_SESSION['busqueda_usuario'])) {
 ?>
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -27,6 +28,7 @@
                         placeholder="¿Qué estás buscando?"
                         pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}"
                         maxlength="30"
+                        required
                     >
                     <button class="btn btn-info" type="submit">
                         Buscar
@@ -36,19 +38,20 @@
         </div>
     </div>
 
-<?php }else{ ?>
+<?php } else { ?>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center my-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8 text-center">
             <form action="" method="POST" autocomplete="off">
-                <input type="hidden" name="modulo_buscador" value="producto">
-                <input type="hidden" name="eliminar_buscador" value="producto">
+                <input type="hidden" name="modulo_buscador" value="usuario">
+                <input type="hidden" name="eliminar_buscador" value="usuario">
 
-                <p class="mb-3">
-                    Estás buscando <strong>“<?php echo $_SESSION['busqueda_usuario']; ?>”</strong>
+                <p class="mb-2">
+                    Estás buscando 
+                    <strong>“<?php echo $_SESSION['busqueda_usuario']; ?>”</strong>
                 </p>
 
-                <button type="submit" class="btn btn-danger">
+                <button type="submit" class="btn btn-danger btn-sm">
                     Eliminar búsqueda
                 </button>
             </form>
@@ -56,29 +59,24 @@
     </div>
 
 <?php
-        # Eliminar producto #
-        if(isset($_GET['product_id_del'])){
-            require_once "./php/producto_eliminar.php";
-        }
-
-        if(!isset($_GET['page'])){
-            $pagina=1;
-        }else{
-            $pagina=(int) $_GET['page'];
-            if($pagina<=1){
-                $pagina=1;
+        // Paginación
+        if (!isset($_GET['page'])) {
+            $pagina = 1;
+        } else {
+            $pagina = (int) $_GET['page'];
+            if ($pagina <= 1) {
+                $pagina = 1;
             }
         }
 
-        $categoria_id = (isset($_GET['category_id'])) ? $_GET['category_id'] : 0;// Obtener categoría seleccionada
+        $pagina = limpiar_cadena($pagina);
+        $registros = 15;
+        $inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
+        $url = "index.php?vista=search&page=";
+        $busqueda = $_SESSION['busqueda_usuario'];
 
-        $pagina=limpiar_cadena($pagina);
-        $url="index.php?vista=product_search&page=";// URL base para paginación
-        $registros=15;
-        $busqueda=$_SESSION['busqueda_producto'];
-
-        # Paginador producto #
-        require_once "./php/producto_lista.php";
+        // Listado filtrado
+        require_once __DIR__ . "/../php/usuario_lista.php";
     }
 ?>
 </div>

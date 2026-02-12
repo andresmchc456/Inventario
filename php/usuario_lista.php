@@ -10,9 +10,23 @@ class UsuarioLista {
         // Conexión
         $conexion = conexion();
 
-        // Consulta
-        $consulta_datos = "SELECT * FROM usuario ORDER BY usuario_id ASC LIMIT $inicio, $registros";
-        $consulta_total = "SELECT COUNT(usuario_id) FROM usuario";
+        // Consulta - Verificar si hay búsqueda
+        if($busqueda != ""){
+            // Si hay búsqueda, filtrar por nombre, usuario o email
+            $consulta_datos = "SELECT * FROM usuario WHERE 
+                               usuario_nombre LIKE '%$busqueda%' OR 
+                               usuario_usuario LIKE '%$busqueda%' OR 
+                               usuario_email LIKE '%$busqueda%' 
+                               ORDER BY usuario_id ASC LIMIT $inicio, $registros";
+            $consulta_total = "SELECT COUNT(usuario_id) FROM usuario WHERE 
+                              usuario_nombre LIKE '%$busqueda%' OR 
+                              usuario_usuario LIKE '%$busqueda%' OR 
+                              usuario_email LIKE '%$busqueda%'";
+        } else {
+            // Si no hay búsqueda, mostrar todos los usuarios
+            $consulta_datos = "SELECT * FROM usuario ORDER BY usuario_id ASC LIMIT $inicio, $registros";
+            $consulta_total = "SELECT COUNT(usuario_id) FROM usuario";
+        }
 
         $datos = $conexion->query($consulta_datos)->fetchAll();
         $total = (int) $conexion->query($consulta_total)->fetchColumn();
