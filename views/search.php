@@ -59,6 +59,12 @@
     </div>
 
 <?php
+
+        # Eliminar usuario #
+        if(isset($_GET['user_id_del'])){
+            require_once "./php/usuario_eliminar.php";//
+        }
+        
         // Paginación
         if (!isset($_GET['page'])) {
             $pagina = 1;
