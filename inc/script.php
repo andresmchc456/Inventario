@@ -1,18 +1,2 @@
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
-
-        if ($navbarBurgers.length > 0) {
-            $navbarBurgers.forEach(el => {
-                el.addEventListener("click", () => {
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-
-                    el.classList.toggle("is-active");
-                    $target.classList.toggle("is-active");
-                });
-            });
-        }
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./js/ajax.js"></script>

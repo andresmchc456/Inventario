@@ -52,7 +52,7 @@
       <!-- Sección derecha -->
       <ul class="navbar-nav mb-2 mb-lg-0 ms-auto nav nav-underline">
         <li class="nav-item">
-          <a class="nav-link" href="#">Mi cuenta</a>
+          <a class="nav-link" href="index.php?vista=user_update&user_id_up=<?php echo $_SESSION['id']; ?>">Mi cuenta</a>
         </li>
         <li class="nav-item">
           <a href="index.php?vista=logout" class="nav-link" href="#">Salir</a> <!-- hace la el enlace con la vista de logout en la carpeta views -->
